@@ -17,46 +17,44 @@
   // 3. When half of the cards are flipped, move the shadow from deck 1 to deck 2.
   // 4. When the final card is picked, add an outline to deck 1.
 
-//Variables~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~Variables~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 let deck1 = [];
 let deck2 = [];
 let cardToRemove;
-  
-//Cached Element References~~~~~~~~~~~~~~~~~~~~~
+//~~~~~~~~~~~~~~~~~~~~~~~Cached Element References~~~~~~~~~~~~~~~~~~~~~
 let deck1Elm = document.querySelector('#deck-1');
 let deck2Elm = document.querySelector('#deck-2');
-
-//Functions~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~Functions~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 const init = () => {
-  deck1 = ["dA","dQ","dK","dJ","d10","d09","d08","d07","d06","d05","d04","d03","d02","hA","hQ","hK","hJ","h10","h09","h08","h07","h06","h05","h04","h03","h02","cA","cQ","cK","cJ","c10","c09","c08","c07","c06","c05","c04","c03","c02","sA","sQ","sK","sJ","s10","s09","s08","s07","s06","s05","s04","s03","s02"]
+  deck1 = ["dA", "dQ", "dK", "dJ", "d10", "d09", "d08", "d07", "d06", "d05", "d04", "d03", "d02", "hA", "hQ", "hK", "hJ", "h10", "h09", "h08", "h07", "h06", "h05", "h04", "h03", "h02", "cA", "cQ", "cK", "cJ", "c10", "c09", "c08", "c07", "c06", "c05", "c04", "c03", "c02", "sA", "sQ", "sK", "sJ", "s10", "s09", "s08", "s07", "s06", "s05", "s04", "s03", "s02"]
 };
 const render = (cardPicked) => {
   // Removes outline class when first card is picked
-  if (deck2.length === 1) {  
+  if (deck2.length === 1) {
     deck2Elm.classList.remove("outline")
   }
   // Remove previous picked card from deck2's class list. 
-  if (deck2.length > 1) {  
-  deck2Elm.classList.remove(cardToRemove)
+  if (deck2.length > 1) {
+    deck2Elm.classList.remove(cardToRemove)
   }
   // Set card to be removed on next click
-  cardToRemove = cardPicked  
+  cardToRemove = cardPicked
   // Apply current picked card deck2's class list. For example, if picked card was "h08", the the deck2El would gain the class "h08", which correlates to a background image of the eight of hearts. 
-  deck2Elm.classList.add(cardPicked)  
+  deck2Elm.classList.add(cardPicked)
   // Check which deck has the majority of cards. Once deck2 has more cards, remove shadow from deck1 and apply it to deck2.
-  if (deck2.length === 26) {  
+  if (deck2.length === 26) {
     deck2Elm.classList.add("shadow");
     deck1Elm.classList.remove("shadow");
   }
-	// If the deck is empty, add an outline and remove the card back color
-  if (deck1.length === 0) {  
+  // If the deck is empty, add an outline and remove the card back color
+  if (deck1.length === 0) {
     deck1Elm.classList.add("outline");
     deck1Elm.classList.remove("back-blue");
   }
 };
 const handleClick = () => {
   // Used to prevent error on click when no cards are left in deck 1
-  if (deck1.length > 0) {  
+  if (deck1.length > 0) {
     // Randomly select number from total cards remaining
     let randomIdx = Math.floor(Math.random() * deck1.length)
     // We use splice and the random index to remove a random card from the deck. Then, we assign that card to a variable. 
@@ -64,11 +62,9 @@ const handleClick = () => {
     // Add the picked card to deck 2
     deck2.push(cardPicked)
     render(cardPicked);
-    };
   };
-
+};
 init();
-
-//Event Listeners~~~~~~~~~~~~~~~~~~~~~~~~~~
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Event Listeners~~~~~~~~~~~~~~~~~~~~~~~~~~
 document.querySelector('#btn').addEventListener('click', handleClick);
 
